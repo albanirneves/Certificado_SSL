@@ -4,7 +4,7 @@ Guia de instalação de certificado para webserver
 ---
 ### Criar Chave
 * Certifique-se que tenha o OpenSSL instalado em C:/OpenSSL ([Win32](https://slproweb.com/download/Win32OpenSSL_Light-1_1_0g.exe), [Win64](https://slproweb.com/download/Win64OpenSSL_Light-1_1_0g.exe), [Others](https://slproweb.com/products/Win32OpenSSL.html)).
-* Abra o programa XCA Certificate and Key Management: [Download](https://sourceforge.net/projects/xca/).
+* Abra o programa XCA Certificate and Key Management ([Download](https://sourceforge.net/projects/xca/)).
 * Crie um Banco de Dados em C:/OpenSSL/bin e coloque uma senha
 * Crie uma nova chave com o nome api.dominio.com.br em Private Keys > New Key
 * Exporte a chave para C:/OpenSSL/bin/api.dominio.com.br.pem
@@ -14,7 +14,7 @@ Guia de instalação de certificado para webserver
 ### Criar CSR
 * Execute como Admin:
 ```
-cd /OpenSSL/bin
+    cd /OpenSSL/bin
     set OPENSSL_CONF=C:/OpenSSL/bin/openssl.cfg
     openssl req -new -key api.dominio.com.br.pem -out api.dominio.com.br.csr
 ```
@@ -35,15 +35,15 @@ cd /OpenSSL/bin
 
 ### Verificar Domínio
 * Acesse [SSL For Free](https://www.sslforfree.com/)
-* Digite o domínio (api.dominio.com.br) e clicar em "Create Free SSL Certificate"
+* Digite o domínio (api.dominio.com.br) e clique em "Create Free SSL Certificate"
 * Escolha "Manual Verification" e "Manually Verify Domain"
-* Baixe o arquivo de verificação e salvar na porta 80 em http://api.dominio.com.br/.well-known/acme-challenge/nomedoarquivo
+* Baixe o arquivo de verificação e deixe disponível em seu servidor na porta 80 em http://api.dominio.com.br/.well-known/acme-challenge/nomedoarquivo
 (pode-se usar apache, nginx, etc)
 * Verifique se a porta 80 está liberada no Firewall.
-* Acesse o endereço de verificação: http://api.dominio.com.br/.well-known/acme-challenge/nomedoarquivo e veja se aparece o arquivo de verificação.
+* Acesse o endereço de verificação: http://api.dominio.com.br/.well-known/acme-challenge/nomedoarquivo e veja se ele está acessível.
 
 ### Criar Certificados (Próprio e Raiz)
-* Marque a opção "I have my own CSR" e confirme.
+* Volte ao site SSL For Free e marque a opção "I have my own CSR" e confirme.
 * Abra o arquivo C:/OpenSSL/bin/api.dominio.com.br.csr e cole todo seu conteúdo no campo "Enter your CSR here"
 * Clique em "Download SSL Certificate"
 * Salve o conteúdo de "Certificate" como C:/OpenSSL/bin/api.dominio.com.br.crt (Este é o certificado próprio)
@@ -55,9 +55,9 @@ cd /OpenSSL/bin
 * Clique na setinha do certificado raiz e selecione o certificado próprio api.dominio.com.br
 * Clique em Export
 * Salve em C:/OpenSSL/bin/api.dominio.com.br.p12 (Export Format \*.p12), entrando com a senha
-* O arquivo api.dominio.com.br.p12 é o certificado com raiz confiável que vamos instalar
+* O arquivo api.dominio.com.br.p12 é o certificado com raiz confiável a ser instalado no servidor.
 * Salve-o no servidor em C:/ssl
-* Caso seja a primeira vez que irá instalar o certificado para este site no servidor pule a próxima sessão.
+* Caso seja a primeira vez que irá instalar o certificado para este site no servidor pule a [instalação](https://github.com/albanirneves/Certificado_SSL#instalação-do-certificado).
 
 ### Desinstalação de Certificados Antigos
 * Execute como Administrador:
@@ -84,11 +84,9 @@ cd /OpenSSL/bin
     cd /ssl
     certutil -f -p ****** -importpfx "%~dp0api.dominio.com.br.p12"
 ```
-* Registre a impressão digital.
+* Registre a impressão digital. ("certhash" -> é o valor da impressão digital encontrada no certificado em Detalhes > Impressão Digital. "appid" -> é a guid registrada no webserver)
 ```
     cd /ssl
     netsh http add sslcert ipport=0.0.0.0:443 certhash=D5831A739821CEAFADA8DC0C3E61B44C1583AF49 appid={AA4AC37D-B812-46A7-BEFB-A68167A05BA7}
 ```
-    Onde:
-        "certhash" -> é o valor da impressão digital encontrada no certificado em Detalhes > Impressão Digital
-        "appid" -> é a guid registrada no webserver
+
