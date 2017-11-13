@@ -84,7 +84,7 @@ Guia de instalação de certificado para webserver
     cd /ssl
     certutil -f -p ****** -importpfx "%~dp0api.dominio.com.br.p12"
 ```
-* Registre a impressão digital ("certhash" -> é o valor da impressão digital encontrada no certificado em Detalhes > Impressão Digital. "appid" -> é a guid registrada no webserver).
+* Registre a impressão digital. "Certhash" é o valor da impressão digital encontrada no certificado em Detalhes > Impressão Digital do arquivo ca_bundle.crt gerado anteriormente, enquanto "appid" é a guid registrada no webserver.
 ```
     cd /ssl
     netsh http add sslcert ipport=0.0.0.0:443 certhash=D5831A739821CEAFADA8DC0C3E61B44C1583AF49 appid={AA4AC37D-B812-46A7-BEFB-A68167A05BA7}
