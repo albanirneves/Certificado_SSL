@@ -82,9 +82,9 @@ Guia de instalação de certificado para webserver
 * Importe o certificado como Admin (onde está ****** coloque a senha):
 ```
     cd /ssl
-    certutil -f -p ****** -importpfx "%~dp0api.dominio.com.br.p12"
+    certutil -f -p ****** -importpfx "api.dominio.com.br.p12"
 ```
-* Registre a impressão digital. "Certhash" é o valor da impressão digital encontrada no certificado em Detalhes > Impressão Digital do arquivo ca_bundle.crt gerado anteriormente, enquanto "appid" é a guid registrada no webserver.
+* Registre a impressão digital. "Certhash" é o valor da impressão digital encontrada no certificado em Detalhes > Impressão Digital do arquivo api.dominio.com.br.crt gerado anteriormente, enquanto "appid" é a guid registrada no webserver.
 ```
     cd /ssl
     netsh http add sslcert ipport=0.0.0.0:443 certhash=D5831A739821CEAFADA8DC0C3E61B44C1583AF49 appid={AA4AC37D-B812-46A7-BEFB-A68167A05BA7}
